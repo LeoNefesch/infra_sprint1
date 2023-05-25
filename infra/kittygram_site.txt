@@ -1,0 +1,5 @@
+IP: 51.250.23.236;
+name_taski: https://meganame.hopto.org;
+name_kittygram: https://kittykat.ddns.net;
+login: yc-user;
+password: 1zbpdc;
