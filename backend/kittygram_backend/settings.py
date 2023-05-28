@@ -1,14 +1,27 @@
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
 
+sentry_sdk.init(
+    dsn='https://e6c94185df824bc5a52f41475836277f@o4505237088305152.ingest.sentry.io/4505256332951552',
+    integrations=[
+        DjangoIntegration(),
+    ],
+
+    traces_sample_rate=1.0,
+
+    send_default_pii=True
+)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', default='')
 
-DEBUG = False
+DEBUG = eval(os.getenv('DEBUG', 'False'))
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
@@ -93,8 +106,8 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static_kittygram_backend'
-STATIC_ROOT = BASE_DIR / 'static_kittygram_backend'
+STATIC_URL = 'static_backend'
+STATIC_ROOT = BASE_DIR / 'static_backend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/var/wwww/kittygram/media'
@@ -103,7 +116,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
